@@ -4,6 +4,7 @@ import connectDb from "./src/config/mongo.config.js";
 import short_url_route from "./src/routes/shortUrl.route.js" 
 import redirectRoute from "./src/routes/redirect.route.js";
 import errorHandler from "./src/utils/errorHandler.js";
+import authRoute from "./src/routes/auth.route.js"
 
 import cors from "cors";
 
@@ -17,12 +18,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Hum app ko bol rhe ki aap use karo or jb use karo udhr jo funcion uudhr aao
-app.use("/api/create",short_url_route)
 
 // 
 
 
-
+app.use("/api/auth", authRoute)
+app.use("/api/create",short_url_route)
 app.use("/api",redirectRoute);
 
 app.use((req, res, next) => {
