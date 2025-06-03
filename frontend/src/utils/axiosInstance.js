@@ -9,7 +9,8 @@ import axios from "axios"
 
 const axiosIsntance = axios.create({
     baseURL:"http://localhost:3000",
-    timeout: 10000
+    timeout: 10000,
+    withCredentials: true, // To include cookies in requests
 
 })
 

@@ -1,15 +1,24 @@
 import React from 'react'
 import ShortnerPage from './pages/shortnerPage'
+import LoginForm from './components/LoginForm'
+import AuthPage from './pages/AuthPage'
+import { Outlet } from '@tanstack/react-router'
+import Navbar from './components/Navbar'
 
-function App() {
+function RouteLayout() {
   return (
     <div  className=' max-w-screen'>
-      <ShortnerPage>
+      {/* <ShortnerPage>
 
       </ShortnerPage>
-      
+       */}
+
+
+       {/* <AuthPage/> */}
+        <Navbar/>
+       <Outlet/>
     </div>
   )
 }
 
-export default App
+export default RouteLayout
