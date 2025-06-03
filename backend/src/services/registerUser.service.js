@@ -9,7 +9,7 @@ export const registerUser = async(name , email, password)=>{
 
     const newUser = createUser({name,email,password});
 
-    const token = await signToken({id: newUser._id});
+    const token = signToken({id: newUser._id});
 
     
     return token;

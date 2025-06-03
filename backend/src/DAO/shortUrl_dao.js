@@ -6,7 +6,7 @@ export const shortUrlSaver =async (originalUrl,shortCode,userId)=>{
 
         const newUrl = new ShortUrl({ originalUrl, shortUrl: shortCode });
         if(userId){
-            newUrl.user_id = userId;
+            newUrl.user = userId;
         }
         await newUrl.save();
         return shortCode;
@@ -22,8 +22,11 @@ export const shortUrlSaver =async (originalUrl,shortCode,userId)=>{
 
 export const redirectUrlDao = async(id)=>{
     const urlData = await ShortUrl.findOneAndUpdate({shortUrl : id},{$inc: {clicks:1}});
-
     return urlData;
 
     
+}
+export const  getCustomUrl = async(slug)=>{
+    console.log("checking")
+    return  await ShortUrl.findOne({shortUrl: slug});
 }

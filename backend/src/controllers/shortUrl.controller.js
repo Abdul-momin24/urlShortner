@@ -1,17 +1,21 @@
-import { createShortUrlServiceWithoutUser } from "../services/shortUrl.service.js";
+import { createShortUrlServiceWithoutUser, createShortUrlServiceWithUser } from "../services/shortUrl.service.js";
 import wrapAsync from "../utils/wrapAsync.js";
 
 export const createShortUrl = wrapAsync(async (req, res) => {
 
-    const { originalUrl } = req.body;
-    console.log(originalUrl)
+    const { originalUrl, slug } = req.body;
+    // console.log(originalUrl)
     if (!originalUrl) {
-       
         return res.status(400).json({ success: false, message: "originalUrl is required" });
     }
-
-    const shortUrl = await createShortUrlServiceWithoutUser(originalUrl);
-
+    
+    let shortUrl;
+    if(req.user){
+        shortUrl = await createShortUrlServiceWithUser(originalUrl, req.user._id, slug);
+    }else{
+        shortUrl = await createShortUrlServiceWithoutUser(originalUrl);
+    }
+    
     const baseUrl = process.env.APP_URL.replace(/\/+$/, '');
     const path = shortUrl.replace(/^\/+/, '');
     const fullShortUrl = `${baseUrl}/api/${path}`;
@@ -21,6 +25,4 @@ export const createShortUrl = wrapAsync(async (req, res) => {
         shortUrl: fullShortUrl,
     });
 });
-
-
 

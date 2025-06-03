@@ -22,8 +22,10 @@ export const login = wrapAsync(async (req,res)=>{
 
     const {email, password} = req.body;
 
-
-    const token = await loginUser(email,password);
+   
+    const {token,user} = await loginUser(email,password);
+   
+    
 
     req.user = user
     res.cookie("acessToken", token, cookieOptions);
