@@ -1,13 +1,27 @@
-import React, { useState } from 'react';
+import { ClipboardCheck, ClipboardCopy, Link } from 'lucide-react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { createShortUrl } from '../api/shortUrl.api';
-import { Link, ClipboardCheck, ClipboardCopy } from 'lucide-react';
+// import { QueryClient } from '@tanstack/re
+// import { useQueryClient } from '@tanstack/react-query';
+
+import { useQueryClient } from '@tanstack/react-query';
+
 
 function UrlForm() {
+
+  // queryClient = useQ
+  const queryClient = useQueryClient();
+
   const [url, setUrl] = useState('');
+  const [customUrl, setCustomUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // ✅ get authentication info from Redux
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   const handleSubmit = async () => {
     if (!url.trim()) return;
@@ -18,8 +32,19 @@ function UrlForm() {
     setCopied(false);
 
     try {
-      const { data } = await createShortUrl(url);
+      const payload = isAuthenticated
+        ? { originalUrl: url, slug: customUrl }
+        : { originalUrl: url,slug:null };
+
+
+      const { data } = await createShortUrl(payload.originalUrl, payload.slug);
+      console.log(data, "data from createShortUrl api");
       setShortUrl(data.shortUrl);
+      // queryClient.invalidateQueries({queryKey:['userUrls']})// 
+      // 
+      queryClient.invalidateQueries({ queryKey: ['userUrls'] });
+
+      // Invalidate user URLs cache to refresh the list
     } catch (err) {
       console.error(err);
       setError('Failed to shorten the URL. Please try again.');
@@ -35,7 +60,7 @@ function UrlForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-emerald-100 to-green-200 px-4">
+    <div className="h-140 flex items-center justify-center bg-gradient-to-br from-emerald-100 to-green-200 px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <h2 className="text-2xl font-bold text-center text-emerald-600 mb-6">
           URL Shortener 🔗
@@ -57,6 +82,22 @@ function UrlForm() {
             />
           </div>
 
+          {isAuthenticated && (
+            <div>
+              <label htmlFor="customUrl" className="block text-sm font-medium text-gray-700">
+                Custom URL (optional)
+              </label>
+              <input
+                id="customUrl"
+                type="text"
+                value={customUrl}
+                onChange={(e) => setCustomUrl(e.target.value)}
+                placeholder="your-custom-slug"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              />
+            </div>
+          )}
+
           <button
             onClick={handleSubmit}
             disabled={loading || !url.trim()}
@@ -75,6 +116,7 @@ function UrlForm() {
                   rel="noreferrer"
                   className="text-emerald-800 font-medium underline break-all"
                 >
+                {console.log(shortUrl)}
                   {shortUrl}
                 </a>
                 <button

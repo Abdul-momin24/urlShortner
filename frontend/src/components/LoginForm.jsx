@@ -1,13 +1,24 @@
-import React, { useState } from "react";
-import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../api/user.api.js"; // adjust path as needed
+import  {loginUserr } from "../source/slice/authSlice.js"
+import { useNavigate } from "@tanstack/react-router";
+
+
 
 export default function LoginForm() {
-  const [email, setEmail] = useState("");
+
+  const navigate = useNavigate();
+const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  const auth = useSelector((state) => state.auth);
+  console.log("Auth state:", auth); // Debugging line to check auth state
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,6 +27,11 @@ export default function LoginForm() {
 
     try {
       const response = await loginUser(email, password);
+      // console.log(response)
+      dispatch(loginUserr(response.user)); // Dispatch login action with user data
+      
+      setLoading(false);
+      navigate({ to: "/dashboard" }); // Redirect to dashboard or home page
       console.log("Login successful:", response);
       // Example: redirect or update global auth state
     } catch (err) {

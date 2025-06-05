@@ -5,6 +5,7 @@ import short_url_route from "./src/routes/shortUrl.route.js"
 import redirectRoute from "./src/routes/redirect.route.js";
 import errorHandler from "./src/utils/errorHandler.js";
 import authRoute from "./src/routes/auth.route.js"
+import getUserUrls from "./src/routes/user.route.js";
 import cookieParser from 'cookie-parser';
 
 import cors from "cors";
@@ -27,13 +28,14 @@ app.use(express.urlencoded({ extended: true }));
 // 
 app.use(cookieParser());
 
+app.use("/",redirectRoute);
 app.use(attachUser);
 app.use("/api/auth", authRoute)
 app.use("/api/create",short_url_route)
-app.use("/api",redirectRoute);
+app.use("/api/user",getUserUrls)
 
 app.use((req, res, next) => {
-    res.status(404).json({ message: ".Route not found" });
+    res.status(404).json({ message: "Route not found" });
   });
 
 app.use(errorHandler)

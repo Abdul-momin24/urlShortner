@@ -28,3 +28,17 @@ export const logoutUser = async () => {
 
     return data;
 }
+
+
+export const getCurrentUser = async () => {
+    const {data} = await axiosInstance.get("/api/auth/me");
+
+    return data;
+}
+
+
+export const getAllUrls = async () => {
+    const {data} = await axiosInstance.get("/api/user/urls");
+
+    return data;
+}

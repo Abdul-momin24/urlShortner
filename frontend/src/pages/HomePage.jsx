@@ -1,8 +1,11 @@
 import React from 'react'
+import UrlBox from '../components/UrlBox'
 
 function HomePage() {
   return (
-    <div>HomePage</div>
+    <div>
+      <UrlBox/>
+    </div>
   )
 }
 

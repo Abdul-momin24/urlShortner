@@ -8,13 +8,6 @@ import Navbar from './components/Navbar'
 function RouteLayout() {
   return (
     <div  className=' max-w-screen'>
-      {/* <ShortnerPage>
-
-      </ShortnerPage>
-       */}
-
-
-       {/* <AuthPage/> */}
         <Navbar/>
        <Outlet/>
     </div>

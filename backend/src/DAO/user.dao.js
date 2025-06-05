@@ -1,8 +1,14 @@
+import shortUrl from "../models/shorturl.model.js";
 import User from "../models/user.model.js";
 
 export const  findUserByEmail = async({email}) =>{
 
     return await User.findOne({email});
+}
+
+export const  findUserByEmailAndPasword = async({email}) =>{
+
+    return await User.findOne({email}).select("+password");
 }
 
 
@@ -47,3 +53,13 @@ export const delelteUser = async(id)=>{
     const user = User.findByIdAndDelete(id);
 
 }
+
+
+
+export const getAllUrlsdao = async (userId) => {
+    
+    const user = await shortUrl.find({user: userId}).populate("user","name email");
+    
+    if (!user) throw new Error("User not found");
+    return user;
+};

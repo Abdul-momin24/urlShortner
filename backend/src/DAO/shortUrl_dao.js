@@ -27,6 +27,6 @@ export const redirectUrlDao = async(id)=>{
     
 }
 export const  getCustomUrl = async(slug)=>{
-    console.log("checking")
+    // console.log("checking")
     return  await ShortUrl.findOne({shortUrl: slug});
 }

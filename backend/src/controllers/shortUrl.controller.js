@@ -18,7 +18,7 @@ export const createShortUrl = wrapAsync(async (req, res) => {
     
     const baseUrl = process.env.APP_URL.replace(/\/+$/, '');
     const path = shortUrl.replace(/^\/+/, '');
-    const fullShortUrl = `${baseUrl}/api/${path}`;
+    const fullShortUrl = `${baseUrl}/${path}`;
 
     res.status(201).json({
         success: true,

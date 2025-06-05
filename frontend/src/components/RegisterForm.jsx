@@ -1,8 +1,15 @@
-import React, { useState } from "react";
-import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
-import { registerUser } from "../api/user.api.js"; // adjust the import path as needed
+import { useNavigate } from "@tanstack/react-router";
+import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
+import { useState } from "react";
+import { registerUser } from "../api/user.api.js";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUserr } from "../source/slice/authSlice.js";
+// adjust the import path as needed
 
 export default function RegisterForm() {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,7 +24,14 @@ export default function RegisterForm() {
 
     try {
       const response = await registerUser(name, email, password);
-      console.log("Registration successful:", response);
+
+
+      console.log("Registration successful:");
+
+      dispatch(loginUserr(response.user))
+      navigate({ to: "/dashboard" });
+      console.log(auth)
+      setLoading(false) // Redirect to login page after successful registration
       // Example: redirect to login page or auto-login
     } catch (err) {
       console.error("Registration failed:", err);

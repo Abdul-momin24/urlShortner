@@ -13,7 +13,6 @@ const attachUser = async (req, res, next) => {
 
     try {
         const decoded = verifyToken(token)
-        console.log(decoded, "decoded token");
         const user = await findUserById(decoded.id.id);
         
         if (!user) {

@@ -8,11 +8,12 @@ export const register = wrapAsync(async(req,res)=>{
     const {name,email,password} = req.body;
 
 
-    const token = await  registerUser(name,email,password);
+    const {token,user} = await  registerUser(name,email,password);
+    req.user = user
 
     res.cookie("acessToken", token, cookieOptions);
     
-    res.status(200).json({message:"Login succefull"});
+    res.status(200).json({message:"register succefull", user:user});
 
 })
 
@@ -30,8 +31,25 @@ export const login = wrapAsync(async (req,res)=>{
     req.user = user
     res.cookie("acessToken", token, cookieOptions);
 
-    res.status(200).json({message:"login success"});
+    res.status(200).json({message:"login success", user:user});
 
 })
 
 
+
+export const logout = wrapAsync(async (req, res) => {
+    res.clearCookie("acessToken", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "Lax",
+    });
+    res.status(200).json({ message: "Logout successful" });
+});
+
+
+export const getMe = wrapAsync(async (req, res) => {
+    res.status(200).json({
+        user: req.user,
+        message: "User fetched successfully"
+    });
+});

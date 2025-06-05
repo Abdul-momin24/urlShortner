@@ -8,7 +8,7 @@ export const generateNanoId = (length) =>{
 
 
 export const signToken = (payload)=>{
-    return jwt.sign({id: payload}, process.env.JWT_SECRET,{expiresIn:"40m"})
+    return jwt.sign({id: payload}, process.env.JWT_SECRET,{expiresIn:"2h"})
 }
 
 
