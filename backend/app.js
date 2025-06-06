@@ -26,6 +26,15 @@ app.use(express.urlencoded({ extended: true }));
 // Hum app ko bol rhe ki aap use karo or jb use karo udhr jo funcion uudhr aao
 
 // 
+
+app.get("/", (req, res) => {
+  res.send({
+    activeStatus: "Server is running",
+    message: "Welcome to the URL Shortener API",
+    error:false,
+  });
+});
+
 app.use(cookieParser());
 
 app.use("/",redirectRoute);
