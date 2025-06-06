@@ -17,7 +17,7 @@ dotenv.config("./.env");
 const app = express();
 
 app.use(cors({
-  origin:"http://localhost:5173", // Replace with your frontend URL
+  origin:"http://localhost:5173", 
   methods:["GET", "POST", "PUT", "DELETE"],
   credentials:true}))
 app.use(express.json());
