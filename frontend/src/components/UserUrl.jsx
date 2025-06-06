@@ -12,6 +12,9 @@ function UserUrl() {
     refetchInterval: 20000,
     staleTime: 0,
   });
+  const domainURl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+  // const [url, setUrl] = useState(null);
+  // setUrl(urls);
 
   const [copied, setCopied] = useState(null);
 
@@ -58,8 +61,6 @@ if (!urlcontent || urlcontent.length === 0) {
   );
 }
 
-  const SHORT_URL_DOMAIN = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
-
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold text-center mb-8">🔗 Your Shortened Links</h1>
@@ -88,12 +89,12 @@ if (!urlcontent || urlcontent.length === 0) {
                 <div>
                   <p className="text-sm text-gray-500">Short URL</p>
                   <a
-                    href={`${SHORT_URL_DOMAIN}/${url.shortUrl}`}
+                    href={`${domainURl}/${url.shortUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-green-600 hover:underline break-all"
                   >
-                    {`${SHORT_URL_DOMAIN}/${url.shortUrl}`}
+                    {`${url.shortUrl}`}
                   </a>
                 </div>
                 <div>

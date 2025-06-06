@@ -2,7 +2,7 @@
 
 
 
-import axios from "axios"
+import axios from "axios";
 
 // baar baar axios instance create ho rha tha usse prevent krne ke liye humne ye ek instance bana diya jisse  humein baar baar instance create na krna pde or hum use krle common code he 
 
