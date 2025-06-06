@@ -10,7 +10,7 @@ export const register = wrapAsync(async(req,res)=>{
 
     const {token,user} = await  registerUser(name,email,password);
     req.user = user
-
+    console.log("user", user);
     res.cookie("acessToken", token, cookieOptions);
     
     res.status(200).json({message:"register succefull", user:user});
