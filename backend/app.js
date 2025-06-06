@@ -27,6 +27,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // 
 
+const port = process.env.PORT || 3000;
+
 app.get("/", (req, res) => {
   res.send({
     activeStatus: "Server is running",
@@ -50,7 +52,7 @@ app.use((req, res, next) => {
 app.use(errorHandler)
 
 
-app.listen(3000, () => {
+app.listen(port, () => {
   connectDb();
   console.log("The code is running on port 3000");
 });
