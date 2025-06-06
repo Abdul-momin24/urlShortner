@@ -1,4 +1,4 @@
-import { findUserByEmail, findUserByEmailAndPasword } from "../DAO/user.dao.js";
+import { findUserByEmailAndPasword } from "../DAO/user.dao.js";
 import { signToken } from "../utils/helper.js";
 // import bcrypt from "bcrypt"; // make sure to install it via `npm i bcrypt`
 
@@ -11,8 +11,7 @@ export const loginUser = async (email, password) => {
     // console.log(user);
     const isMatch= await user.comparePassword(password);
 
-    // const isMatch = await bcrypt.compare(password, user.password);
-    if (isMatch) throw new Error("Invalid Credentials");
+    if (!isMatch) throw new Error("Invalid Credentials");
 
     const token = signToken({ id: user._id });
 
