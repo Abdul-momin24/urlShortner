@@ -29,3 +29,14 @@ export const redirectUrlDao = async(id)=>{
 export const  getCustomUrl = async(slug)=>{
     return await ShortUrl.findOne({shortUrl: slug});
 }
+
+
+
+export const deleteShortUrlDao = async(id)=>{
+    try{
+        const deletedUrl = await ShortUrl.findByIdAndDelete(id);
+        return deletedUrl;
+    }catch(err){
+        throw new Error("Server Error");
+    }
+}

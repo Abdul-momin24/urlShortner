@@ -26,11 +26,9 @@ export default function RegisterForm() {
       const response = await registerUser(name, email, password);
 
 
-      console.log("Registration successful:");
 
       dispatch(loginUserr(response.user))
       navigate({ to: "/dashboard" });
-      console.log(auth)
       setLoading(false) // Redirect to login page after successful registration
       // Example: redirect to login page or auto-login
     } catch (err) {

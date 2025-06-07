@@ -8,7 +8,6 @@ export const loginUser = async (email, password) => {
 
 
     if (!user) throw new Error("Invalid Credentials");
-    // console.log(user);
     const isMatch= await user.comparePassword(password);
 
     if (!isMatch) throw new Error("Invalid Credentials");

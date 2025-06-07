@@ -1,3 +1,4 @@
+import { Timestamp } from "mongodb";
 import mongoose from "mongoose";
 
 
@@ -17,11 +18,13 @@ const shortUrlSchema = new mongoose.Schema({
         // required:true,
         default:0,
     },
+    
     user:{
         type: mongoose.Schema.Types.ObjectId,
         ref:"User",
-        // required: true
     }
+},{
+    timestamps: true,
 });
 
 

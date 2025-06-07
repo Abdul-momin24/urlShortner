@@ -10,7 +10,7 @@ import { useNavigate } from "@tanstack/react-router";
 export default function LoginForm() {
 
   const navigate = useNavigate();
-const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");

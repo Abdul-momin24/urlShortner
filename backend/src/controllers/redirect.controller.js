@@ -4,7 +4,6 @@ import { redirectUrlDao } from "../DAO/shortUrl_dao.js";
 import wrapAsync from "../utils/wrapAsync.js";
 
 export const redirectUrlController = wrapAsync(async (req,res) =>{
-        // console.log("id", req.params.id);
 
         const {id} = req.params;
 

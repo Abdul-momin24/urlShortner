@@ -27,7 +27,7 @@ function Navbar() {
       <Link to="/" className="text-2xl font-bold text-emerald-600 tracking-wide">
         🔗 Shortify
       </Link>
-      {isAuthenticated && (
+      {isAuthenticated && user?.user?.name && (
         <span className="text-sm text-gray-600">
           Welcome, {user.user.name}
         </span>

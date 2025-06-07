@@ -6,9 +6,9 @@ import { authMiddleware } from "../middleware/auth.middleware.js";
 const router = express.Router()
 
 
+router.get("/me", authMiddleware,getMe) // authMiddleware will check if user is authenticated
 router.post("/register", register)
 router.post("/login", login)
 
 router.get("/logout", logout)
-router.get("/me", authMiddleware,getMe) // authMiddleware will check if user is authenticated
 export default  router;

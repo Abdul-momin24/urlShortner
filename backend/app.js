@@ -1,12 +1,12 @@
-import express from "express";
-import dotenv from "dotenv";
-import connectDb from "./src/config/mongo.config.js";
-import short_url_route from "./src/routes/shortUrl.route.js" 
-import redirectRoute from "./src/routes/redirect.route.js";
-import errorHandler from "./src/utils/errorHandler.js";
-import authRoute from "./src/routes/auth.route.js"
-import getUserUrls from "./src/routes/user.route.js";
 import cookieParser from 'cookie-parser';
+import dotenv from "dotenv";
+import express from "express";
+import connectDb from "./src/config/mongo.config.js";
+import authRoute from "./src/routes/auth.route.js";
+import redirectRoute from "./src/routes/redirect.route.js";
+import short_url_route from "./src/routes/shortUrl.route.js";
+import getUserUrls from "./src/routes/user.route.js";
+import errorHandler from "./src/utils/errorHandler.js";
 
 import cors from "cors";
 import attachUser from "./src/utils/attachUser.js";
@@ -17,9 +17,10 @@ dotenv.config("./.env");
 const app = express();
 
 app.use(cors({
-  origin:true, 
-  methods:["GET", "POST", "PUT", "DELETE"],
-  credentials:true}))
+  origin: "http://localhost:5173", // Use your frontend URL in production
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
