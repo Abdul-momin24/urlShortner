@@ -1,20 +1,15 @@
 import { Link, useNavigate } from '@tanstack/react-router';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../api/user.api';
 import { logout } from '../source/slice/authSlice';
-// import { useNavigate } from "@tanstack/react-router";
-
-
 
 function Navbar() {
   const navigate = useNavigate();
-  
-  const isAuthenticated= useSelector((state) => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    console.log("Logging out...");
-    navigate({to: '/'});
+    navigate({ to: '/' });
     try {
       const response = await logoutUser();
       console.log("Logout successful:", response);
@@ -24,44 +19,50 @@ function Navbar() {
       alert("Logout failed. Please try again.");
     }
   };
+  const user = useSelector((state) => state.auth.user);
+
+
   return (
-    <nav className="bg-white shadow-md px-6 py-3 flex justify-between items-center">
-      <Link to="/" className="text-2xl font-bold text-emerald-600">
+    <nav className="sticky top-0 z-50 bg-white shadow-md px-6 py-4 flex justify-between items-center">
+      <Link to="/" className="text-2xl font-bold text-emerald-600 tracking-wide">
         🔗 Shortify
       </Link>
+      {isAuthenticated && (
+        <span className="text-sm text-gray-600">
+          Welcome, {user.user.name}
+        </span>
+      )}
 
-      <div className="space-x-4 flex items-center">
+      <div className="flex items-center space-x-6">
+    {!isAuthenticated && (
         <Link
           to="/"
           className="text-gray-700 hover:text-emerald-600 transition font-medium"
         >
           Home
         </Link>
+      )}
+
+        {isAuthenticated && (
+          <Link
+            to="/dashboard"
+            className="text-gray-700 hover:text-emerald-600 transition font-medium"
+          >
+            Dashboard
+          </Link>
+        )}
 
         {!isAuthenticated ? (
-          <>
-            <Link
-              to="/auth?mode=login"
-              className="px-4 py-1.5 text-sm bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition"
-            >
-              Login
-            </Link>
-            <Link
-              to="/auth?mode=register"
-              className="px-4 py-1.5 text-sm border border-emerald-500 text-emerald-600 rounded-lg hover:bg-emerald-50 transition"
-
-              
-            >
-            
-              Register
-            </Link>
-          </>
+          <Link
+            to="/auth?mode=login"
+            className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium rounded-lg transition"
+          >
+            Login
+          </Link>
         ) : (
           <button
             onClick={handleLogout}
-            className="px-4 py-1.5 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-
-            
+            className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm font-medium rounded-lg transition"
           >
             Logout
           </button>

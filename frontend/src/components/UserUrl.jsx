@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getAllUrls } from '../api/user.api';
 import { ClipboardCopy, ClipboardCheck } from 'lucide-react';
+import { useQueryClient } from '@tanstack/react-query';
 
 function UserUrl() {
 
@@ -9,18 +10,22 @@ function UserUrl() {
     queryKey: ['userUrls'],
     queryFn: getAllUrls,
     refetchOnWindowFocus: false,
-    refetchInterval: 20000,
+    refetchInterval: 10000,
     staleTime: 0,
   });
   const domainURl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
   // const [url, setUrl] = useState(null);
   // setUrl(urls);
+  const queryClient = useQueryClient();
+
 
   const [copied, setCopied] = useState(null);
 
   const handleCopy = (url, id) => {
+    const fullShortUrl = `${domainURl}/${url}`;
+
     navigator.clipboard
-      .writeText(url)
+      .writeText(fullShortUrl)
       .then(() => {
         setCopied(id);
         setTimeout(() => setCopied(null), 2000);
@@ -69,7 +74,7 @@ if (!urlcontent || urlcontent.length === 0) {
 
       {urlcontent && urlcontent.length > 0 ? (
         <div className="grid md:grid-cols-2 gap-6">
-          {urlcontent.reverse().map((url) => (
+          {[...urlcontent].reverse().map((url) => (
             <div
               key={url._id}
               className="bg-white p-5 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200"
@@ -80,6 +85,7 @@ if (!urlcontent || urlcontent.length === 0) {
                   href={url.originalUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+
                   className="text-blue-600 hover:underline break-words"
                 >
                   {url.originalUrl}
@@ -92,6 +98,12 @@ if (!urlcontent || urlcontent.length === 0) {
                     href={`${domainURl}/${url.shortUrl}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    onClick={() => {
+    // Delay refetch slightly to allow backend to increment click
+    setTimeout(() => {
+      queryClient.invalidateQueries({ queryKey: ['userUrls'] });
+    }, 1000);
+  }}
                     className="text-green-600 hover:underline break-all"
                   >
                     {`${url.shortUrl}`}

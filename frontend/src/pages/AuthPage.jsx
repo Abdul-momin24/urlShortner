@@ -8,7 +8,7 @@ function AuthPage() {
   const toggleForm = () => setIsLogin((prev) => !prev);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-200 p-4">
+    <div className="h-[92vh] flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-200 p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
         {isLogin ? <LoginForm /> : <RegisterForm />}
 
