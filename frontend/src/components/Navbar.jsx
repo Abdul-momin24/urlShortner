@@ -28,6 +28,7 @@ function Navbar() {
         🔗 Shortify
       </Link>
       {isAuthenticated && user?.user?.name && (
+        console.log(user),
         <span className="text-sm text-gray-600">
           Welcome, {user.user.name}
         </span>
