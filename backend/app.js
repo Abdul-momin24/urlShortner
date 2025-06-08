@@ -17,7 +17,7 @@ dotenv.config("./.env");
 const app = express();
 
 app.use(cors({
-  origin: "https://url-shortner-ashy-nu.vercel.app", // Use your frontend URL in production
+  origin: "https://url-shortner-z4yr.vercel.app", // Use your frontend URL in production
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }))
