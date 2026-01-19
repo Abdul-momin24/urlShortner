@@ -9,6 +9,21 @@ import getUserUrls from "./src/routes/user.route.js";
 import errorHandler from "./src/utils/errorHandler.js";
 
 import cors from "cors";
+
+
+const allowedOrigins = [
+  "http://localhost:5000",
+  "http://localhost:3000",
+  "http://localhost:5173", // if using Vite dev server
+  "https://url-shortner-z4yr.vercel.app"
+];
+
+
+
+
+
+
+
 import attachUser from "./src/utils/attachUser.js";
 
 
@@ -16,17 +31,33 @@ dotenv.config("./.env");
 
 const app = express();
 
-app.use(cors({
-  origin: "https://url-shortner-z4yr.vercel.app", // Use your frontend URL in production
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true
-}))
+app.use(
+  cors({
+    origin(origin, callback) {
+      // allow server-to-server, curl, postman
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+  })
+);
+
+// Handle preflight explicitly
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Hum app ko bol rhe ki aap use karo or jb use karo udhr jo funcion uudhr aao
 
-// 
+// :x
+//
 
 const port = process.env.PORT || 3000;
 
