@@ -58,7 +58,7 @@ coverage/
 *.lcov
 
 # Dependency lock files (optional)
-package-lock.json
+
 
 # Cache
 .cache/
