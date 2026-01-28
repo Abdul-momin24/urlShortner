@@ -19,7 +19,7 @@ function AuthPage() {
               onClick={toggleForm}
               className="text-indigo-600 hover:underline font-medium"
             >
-              {isLogin ? "Register" : "Login"}
+              {isLogin ? "wanna register?" : "Login"}
             </button>
           </p>
         </div>
@@ -29,3 +29,4 @@ function AuthPage() {
 }
 
 export default AuthPage;
+
